@@ -1,5 +1,5 @@
 var app = {
-  lastCreated: '2015-02-17T00:50:32.494Z',
+  lastCreated: null,
   currentRoom: undefined,
   server: 'http://127.0.0.1:3000',
   rooms: {},
@@ -136,14 +136,15 @@ var app = {
     var defaults = {
       username : $('#user').val(),
       text: $('#message').val(),
-      roomname: $('#room').val()
+      roomname: $('#room').val(),
+      timestamp: new Date().getTime()
     };
 
     console.log(typeof message);
     var message = message || defaults;
 
     $.ajax({
-      url: context.server + '/send',
+      url: context.server + '/classes/messages',
       type: 'POST',
       data: JSON.stringify(message),
       contentType: 'application/json',
