@@ -32,9 +32,19 @@ module.exports.getRooms = function(callback){
 
 // pass in user as object {user: 'name'}
 module.exports.insertUser = function(user){
-  connection.query('INSERT INTO users', user, function(err, result){
+  connection.query('INSERT INTO users SET ?', user, function(err, result){
     if(err) throw err;
-    console.log(result);
-  })
+  });
 };
 
+module.exports.insertMessage = function (message){
+  connection.query('INSERT INTO messages SET ?', message, function(err, result){
+    if (err) throw err;
+  });
+};
+
+module.exports.insertRoom = function (room){
+ connection.query('INSERT INTO rooms SET ?', room, function(err, result){
+   if (err) throw err;
+ });
+}
