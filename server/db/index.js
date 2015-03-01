@@ -16,7 +16,13 @@ module.exports.getUsers = function(callback){
   });
 };
 
-module.exports.getMessages = function(callback){
+module.exports.getUserId = function(username, callback) {
+  connection.query('SELECT id FROM users WHERE user=?', username, function(err, rows){
+    callback(rows);
+  });
+};
+
+module.exports.getMessages = function(timestamp, room, callback){
   connection.query('SELECT message FROM messages', function(err, rows, fields){
     if(err) throw err;
     callback(rows);
@@ -24,16 +30,17 @@ module.exports.getMessages = function(callback){
 };
 
 module.exports.getRooms = function(callback){
-  connection.query('SELECT room FROM rooms', function(err, rows, fields){
+  connection.query('SELECT room FROM rooms', function(err, rows){
     if(err) throw err;
     callback(rows);
   });
 };
 
 // pass in user as object {user: 'name'}
-module.exports.insertUser = function(user){
+module.exports.insertUser = function(user, callback){
   connection.query('INSERT INTO users SET ?', user, function(err, result){
     if(err) throw err;
+    callback(result);
   });
 };
 

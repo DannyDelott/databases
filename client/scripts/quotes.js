@@ -8,7 +8,8 @@ var getQuote = function() {
       var message = {
         username : "Chuck Norris",
         text: quote,//.split("").reverse().join(""),
-        roomname: "Everywhere"
+        roomname: "Everywhere",
+        timestamp: new Date().getTime()
       };
       app.send(message);
     },
@@ -19,7 +20,7 @@ var getQuote = function() {
   });
 };
 
-setInterval(getQuote, 60000);
+// setInterval(getQuote, 60000);
 
 
 
