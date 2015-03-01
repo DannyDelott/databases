@@ -4,49 +4,32 @@ module.exports = {
   messages: {
 
      // a function which produces all the messages
-    get: function (timestamp, room, callback) {
-      // use db.getMessages(callback, timestamp)
+    get: function (callback) {
+      var qryString = 'SELECT * FROM messages';
+      db.query(qryString, function(err, result){
+        callback(result);
+      });
     },
 
     // a function which can be used to insert a message into the database
-    post: function (body, callback) {
-
-      var username = body.username;
-      console.log('username received:', username);
-
-      db.getUserId(username, function(rows){
-        console.log('rows in users table', rows);
-        // username doesn't exist in table
-        if(rows.length === 0){
-          db.insertUser({user: username}, function(result){
-            // console.log('result id is', result.insertId);
-            callback(result.insertId);
-          });
-        }else {
-          callback(rows[0].id);
-        }
-
+    post: function (params, callback) {
+      var qryString = 'INSERT INTO messages SET ?';
+      db.query(qryString, params, function(err, result){
+        if (err) throw err;
+        callback(result);
       });
-
-
-      //  doesn't exist in the users table
-        // insert user into users table and return the userID
-      // else
-        // get the userID from the users table
-
-      // if the roomname inside the body object
-      // doesn't exist in the rooms table
-        // insert room into rooms table and return the roomID
-      // else
-        // get the roomID from the rooms table
-
 
     }
   },
 
   users: {
     // Ditto as above.
-    get: function () {},
+    get: function (callback) {
+      var qryString = 'SELECT * FROM users';
+      db.query(qryString, function(err, result){
+        callback(result);
+      });
+    },
     post: function () {}
   }
 };

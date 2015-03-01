@@ -53,9 +53,9 @@ var app = {
     for (var i = 0; i < messages.length; i++) {
       var friendClass = 'enemy';
       var message = messages[i];
-      var username = this.cleanData(message.username);
-      var text = this.cleanData(message.text);
-      var roomname = this.cleanData(message.roomname);
+      var username = this.cleanData(message.user);
+      var text = this.cleanData(message.message);
+      var roomname = this.cleanData(message.room);
 
       if (username in this.friends) {
         friendClass = 'friend';
@@ -115,11 +115,12 @@ var app = {
       type: 'GET',
       data: data,
       success: function(response) {
-        var messages = response.results;
+        var messages = response;
+        console.log(messages);
 
-        if (messages[0] !== undefined) {
-          context.lastCreated = messages[0].createdAt; // get most up-to-date timestamp
-        }
+        // if (messages[0] !== undefined) {
+        //   context.lastCreated = messages[0].createdAt; // get most up-to-date timestamp
+        // }
         context.addNewRooms(messages);
         context.displayMessages(messages);
       },
@@ -134,10 +135,9 @@ var app = {
     console.log("Sent!");
 
     var defaults = {
-      username : $('#user').val(),
-      text: $('#message').val(),
-      roomname: $('#room').val(),
-      timestamp: new Date().getTime()
+      user : $('#user').val(),
+      message: $('#message').val(),
+      room: $('#room').val()
     };
 
     console.log(typeof message);
